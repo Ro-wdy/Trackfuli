@@ -58,13 +58,13 @@ const hourData = [
 
 export function HourlyBarChart() {
   const [hoveredIndex, setHoveredIndex] = useState(13);
-  const maxH = 110;
+  const maxH = 180;
 
   return (
     <div 
-      className="flex items-end justify-between gap-1 sm:gap-2.5 md:gap-3.5 w-full overflow-x-auto pb-2 mt-4"
+      className="flex items-end justify-between gap-1 sm:gap-2.5 md:gap-3.5 w-full overflow-x-auto pb-2 mt-12"
       id="hourly-bar-chart-container"
-      style={{ minHeight: maxH + 40 }}
+      style={{ minHeight: maxH + 60 }}
     >
       {hourData.map((d, i) => {
         const isHoveredOrActive = hoveredIndex === i;
@@ -109,7 +109,7 @@ export function HourlyBarChart() {
                 transform: isHoveredOrActive ? "scaleX(1.1)" : "none",
               }}
             />
-            <div style={{ marginTop: 6, fontSize: 11, color: "#1a1a1a", fontWeight: 500, whiteSpace: "nowrap" }}>
+            <div style={{ marginTop: 10, fontSize: 11, color: "#1a1a1a", fontWeight: 500, whiteSpace: "nowrap" }}>
               {d.h}
             </div>
           </div>

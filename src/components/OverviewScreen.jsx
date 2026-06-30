@@ -115,13 +115,13 @@ const initialMonthData = [
 
 export function MonthlyBarChart() {
   const [hoveredIndex, setHoveredIndex] = useState(0);
-  const maxH = 130;
+  const maxH = 220;
 
   return (
     <div 
-      className="flex items-end justify-between gap-1.5 sm:gap-4 md:gap-6 w-full overflow-x-auto pb-2 mt-4"
+      className="flex items-end justify-between gap-1.5 sm:gap-4 md:gap-6 w-full overflow-x-auto pb-2 mt-8"
       id="monthly-bar-chart-container"
-      style={{ minHeight: maxH + 45 }}
+      style={{ minHeight: maxH + 60 }}
     >
       {initialMonthData.map((d, i) => {
         const isHoveredOrActive = hoveredIndex === i;
@@ -155,7 +155,7 @@ export function MonthlyBarChart() {
             <div
               style={{
                 width: "100%",
-                maxWidth: 46,
+                maxWidth: 30,
                 height: Math.max(maxH * d.h, 10),
                 background: GREEN,
                 borderRadius: 999,
@@ -165,7 +165,7 @@ export function MonthlyBarChart() {
                 transform: isHoveredOrActive ? "scaleX(1.05)" : "none",
               }}
             />
-            <div style={{ marginTop: 6, fontSize: 13, color: "#1a1a1a", fontWeight: 500 }}>{d.m}</div>
+            <div style={{ marginTop: 14, fontSize: 13, color: "#1a1a1a", fontWeight: 500 }}>{d.m}</div>
           </div>
         );
       })}
