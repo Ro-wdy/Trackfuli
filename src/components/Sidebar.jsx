@@ -23,8 +23,7 @@ function NavIcon({ name, color }) {
         <svg width="22" height="22" viewBox="0 0 24 24" {...common} id="nav-icon-layout">
           <rect x="3" y="3" width="7" height="7" rx="1.5" />
           <rect x="14" y="3" width="7" height="7" rx="1.5" />
-          <rect x="3" y="14" width="7" height="7" rx="1.5" />
-          <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          <rect x="3" y="14" width="17" height="7" rx="1.5" />
         </svg>
       );
     case "trend":
