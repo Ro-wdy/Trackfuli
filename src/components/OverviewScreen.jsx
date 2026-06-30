@@ -2,33 +2,36 @@ import React, { useState } from "react";
 import { Flame, CalendarDays, Activity } from "lucide-react";
 
 const GREEN = "#004A4C";
-const GREY = "#EDEBEB";
+const GREY = "#F3F2EC";
 
-// Icons specifically matched to the visual designs
 function CylinderIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="1.6" id="icon-cylinder">
-      <rect x="6" y="3" width="4" height="3" />
-      <path d="M5 7h6v13a1 1 0 01-1 1H6a1 1 0 01-1-1V7z" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" id="icon-cylinder">
+      {/* Cylinder body */}
+      <rect x="8" y="7" width="8" height="13" rx="2" />
+      {/* Collar/Cap on top */}
+      <path d="M10 7V4h4v3" />
+      {/* Top ring connection line */}
+      <line x1="8" y1="10" x2="16" y2="10" />
     </svg>
   );
 }
 
 function BedIcon() {
   return (
-    <Flame size={18} color={GREEN} strokeWidth={1.8} id="icon-bed" />
+    <div style={{ width: 22, height: 22 }} id="icon-bed" />
   );
 }
 
-function CalendarIcon() {
+function CalendarIcon({ color }) {
   return (
-    <CalendarDays size={18} color={GREEN} strokeWidth={1.8} id="icon-calendar" />
+    <CalendarDays size={22} color={color || "#E16C6C"} strokeWidth={1.8} id="icon-calendar" />
   );
 }
 
 function PulseIcon() {
   return (
-    <Activity size={18} color={GREEN} strokeWidth={1.8} id="icon-pulse" />
+    <div style={{ width: 22, height: 22 }} id="icon-pulse" />
   );
 }
 
@@ -41,13 +44,13 @@ function Chevron() {
 }
 
 export function StatCard({ label, value, sub, icon, accent = false }) {
-  const textColor = accent ? "#F46D6D" : GREEN;
+  const textColor = accent ? "#E16C6C" : GREEN;
   return (
     <div
       style={{
         background: GREY,
         borderRadius: 16,
-        padding: "18px 20px",
+        padding: "14px 18px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -57,9 +60,9 @@ export function StatCard({ label, value, sub, icon, accent = false }) {
       id={`overview-stat-${label.toLowerCase().replace(/\s+/g, '-')}`}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <span style={{ fontSize: 14, color: accent ? "#F46D6D" : "#555", fontWeight: 500 }}>{label}</span>
-        <div style={{ fontSize: 26, fontWeight: 600, color: textColor, marginTop: 6 }}>{value}</div>
-        <div style={{ fontSize: 12.5, color: accent ? "#F46D6D" : "#8a8a85", marginTop: 4 }}>{sub}</div>
+        <span style={{ fontSize: 13, color: accent ? "#E16C6C" : "#6D7374", fontWeight: 500 }}>{label}</span>
+        <div style={{ fontSize: 22, fontWeight: 600, color: textColor, marginTop: 3 }}>{value}</div>
+        <div style={{ fontSize: 12, color: accent ? "#E16C6C" : "#8A8A85", marginTop: 2 }}>{sub}</div>
       </div>
       <div style={{ color: textColor, opacity: 1, display: "flex", alignItems: "center", justifyContent: "center", marginLeft: 12 }}>
         {icon}
@@ -68,24 +71,26 @@ export function StatCard({ label, value, sub, icon, accent = false }) {
   );
 }
 
-export function Pill({ children, active = false, onClick }) {
+export function Pill({ children, active = false, onClick, variant }) {
+  const bg = variant === "grey" ? "#E5E3DB" : "#FFFFFF";
   return (
     <button
       onClick={onClick}
       style={{
-        border: "1px solid #1a1a1a",
-        background: active ? "#1a1a1a" : "transparent",
-        color: active ? "#fff" : "#1a1a1a",
+        border: "1.8px solid #1a1a1a",
+        background: bg,
+        color: "#1a1a1a",
         borderRadius: 999,
         padding: "9px 18px",
-        fontSize: 14,
-        fontWeight: 500,
+        fontSize: 13.5,
+        fontWeight: 600,
         display: "flex",
         alignItems: "center",
-        gap: 6,
+        gap: 8,
         whiteSpace: "nowrap",
         cursor: "pointer",
-        transition: "all 0.25s ease",
+        transition: "all 0.2s ease",
+        boxShadow: "0 1px 2px rgba(0,0,0,0.03)",
       }}
     >
       {children}
@@ -110,35 +115,36 @@ const initialMonthData = [
 
 export function MonthlyBarChart() {
   const [hoveredIndex, setHoveredIndex] = useState(0);
-  const maxH = 380;
+  const maxH = 130;
 
   return (
     <div 
-      className="flex items-end justify-between gap-1.5 sm:gap-4 md:gap-6 w-full overflow-x-auto pb-2 mt-8"
+      className="flex items-end justify-between gap-1.5 sm:gap-4 md:gap-6 w-full overflow-x-auto pb-2 mt-4"
       id="monthly-bar-chart-container"
-      style={{ minHeight: maxH + 40 }}
+      style={{ minHeight: maxH + 45 }}
     >
       {initialMonthData.map((d, i) => {
         const isHoveredOrActive = hoveredIndex === i;
         return (
           <div 
-            key={d.m} 
             className="flex flex-col items-center flex-1 min-w-[28px] relative"
             onMouseEnter={() => setHoveredIndex(i)}
             id={`chart-bar-col-${d.m}`}
+            key={d.m}
           >
             {isHoveredOrActive && (
               <div
                 style={{
                   position: "absolute",
                   bottom: maxH * d.h + 14,
-                  background: "#fff",
+                  background: "#FFFFFF",
+                  border: "1px solid #E2E0D8",
                   borderRadius: 999,
                   padding: "6px 14px",
-                  fontSize: 13,
+                  fontSize: 12.5,
                   fontWeight: 600,
                   color: "#1a1a1a",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
                   whiteSpace: "nowrap",
                   zIndex: 10,
                 }}
@@ -152,14 +158,14 @@ export function MonthlyBarChart() {
                 maxWidth: 46,
                 height: Math.max(maxH * d.h, 10),
                 background: GREEN,
-                borderRadius: 18,
+                borderRadius: 999,
                 cursor: "pointer",
                 opacity: 1,
                 transition: "transform 0.2s ease",
                 transform: isHoveredOrActive ? "scaleX(1.05)" : "none",
               }}
             />
-            <div style={{ marginTop: 14, fontSize: 13, color: "#1a1a1a", fontWeight: 500 }}>{d.m}</div>
+            <div style={{ marginTop: 6, fontSize: 13, color: "#1a1a1a", fontWeight: 500 }}>{d.m}</div>
           </div>
         );
       })}
@@ -168,7 +174,7 @@ export function MonthlyBarChart() {
 }
 
 export function DonutCard({ title, value, sub, pct }) {
-  const r = 46;
+  const r = 30;
   const c = 2 * Math.PI * r;
   const offset = c * (1 - pct / 100);
   return (
@@ -176,7 +182,7 @@ export function DonutCard({ title, value, sub, pct }) {
       style={{
         background: GREY,
         borderRadius: 16,
-        padding: "22px 26px",
+        padding: "14px 18px",
         flex: 1,
         display: "flex",
         alignItems: "center",
@@ -185,24 +191,24 @@ export function DonutCard({ title, value, sub, pct }) {
       id={`donut-card-${title.toLowerCase()}`}
     >
       <div>
-        <div style={{ fontSize: 14, color: "#1a1a1a", fontWeight: 500 }}>{title}</div>
-        <div style={{ fontSize: 26, fontWeight: 600, color: GREEN, margin: "6px 0 4px" }}>{value}</div>
-        <div style={{ fontSize: 13, color: "#8a8a85" }}>{sub}</div>
+        <div style={{ fontSize: 13, color: "#6D7374", fontWeight: 500 }}>{title}</div>
+        <div style={{ fontSize: 22, fontWeight: 600, color: GREEN, margin: "4px 0 2px" }}>{value}</div>
+        <div style={{ fontSize: 12.5, color: "#8a8a85" }}>{sub}</div>
       </div>
-      <div style={{ position: "relative", width: 110, height: 110, marginLeft: 12 }}>
-        <svg width="110" height="110" viewBox="0 0 110 110">
-          <circle cx="55" cy="55" r={r} fill="none" stroke="#d8d6cf" strokeWidth="6" />
+      <div style={{ position: "relative", width: 80, height: 80, marginLeft: 12 }}>
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r={r} fill="none" stroke="#d8d6cf" strokeWidth="5.5" />
           <circle
-            cx="55"
-            cy="55"
+            cx="40"
+            cy="40"
             r={r}
             fill="none"
             stroke={GREEN}
-            strokeWidth="6"
+            strokeWidth="5.5"
             strokeLinecap="round"
             strokeDasharray={c}
             strokeDashoffset={offset}
-            transform="rotate(-90 55 55)"
+            transform="rotate(-90 40 40)"
             style={{ transition: "stroke-dashoffset 0.8s ease-in-out" }}
           />
         </svg>
@@ -213,7 +219,7 @@ export function DonutCard({ title, value, sub, pct }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 17,
+            fontSize: 14,
             fontWeight: 600,
             color: "#1a1a1a",
           }}
@@ -229,32 +235,32 @@ export default function OverviewScreen({ onLockedClick }) {
   const [selectedTimeframe, setSelectedTimeframe] = useState("Weekly");
 
   return (
-    <div id="overview-screen-layout" className="flex flex-col gap-6">
+    <div id="overview-screen-layout" className="flex flex-col gap-4">
       {/* KPI Stats Cards - Top row in reference layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard label="Current Available" value="345 kg" sub="As at 12:10 PM" icon={<CylinderIcon />} />
         <StatCard label="Today's Consumption" value="15 kg" sub="As at 12:10 PM" icon={<BedIcon />} />
-        <StatCard label="This Month Consumption" value="545 kg" sub="12 Days" icon={<CalendarIcon />} accent />
+        <StatCard label="This Month Consumption" value="545 kg" sub="12 Days" icon={<CalendarIcon color="#E16C6C" />} accent />
         <StatCard label="Monthly Average" value="245 kg" sub="20 Months" icon={<PulseIcon />} />
       </div>
 
       {/* Main Bar Chart Panel */}
-      <div style={{ background: GREY, borderRadius: 20, padding: "28px 32px 20px" }} id="consumption-chart-panel">
+      <div style={{ background: GREY, borderRadius: 24, padding: "18px 24px 14px" }} id="consumption-chart-panel">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <h2 style={{ fontSize: 26, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>Total Consumption</h2>
+          <h2 style={{ fontSize: 22, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>Total Consumption</h2>
           <div className="flex flex-wrap gap-2.5">
-            <Pill onClick={() => onLockedClick("Type Filters")}>All Types <Chevron /></Pill>
-            <Pill onClick={() => onLockedClick("Location Filters")}>All Locations <Chevron /></Pill>
-            <Pill onClick={() => onLockedClick("Timeframe Selector")}>This Year <Chevron /></Pill>
+            <Pill variant="grey" onClick={() => onLockedClick("Type Filters")}>All Types <Chevron /></Pill>
+            <Pill variant="grey" onClick={() => onLockedClick("Location Filters")}>All Locations <Chevron /></Pill>
+            <Pill variant="grey" onClick={() => onLockedClick("Timeframe Selector")}>This Year <Chevron /></Pill>
           </div>
         </div>
         <MonthlyBarChart />
       </div>
 
       {/* Location Section Heading & Timeframe Switcher */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-4">
-        <h2 style={{ fontSize: 22, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>Location Based Consumption By</h2>
-        <div style={{ display: "flex", gap: 8, background: "#f4f3ee", borderRadius: 999, padding: 4 }}>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-2">
+        <h2 style={{ fontSize: 18, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>Location Based Consumption By</h2>
+        <div style={{ display: "flex", gap: 8, background: "#E5E3DB", borderRadius: 999, padding: 4 }}>
           {["Yearly", "Monthly", "Weekly"].map((t) => {
             const isSelected = t === selectedTimeframe;
             return (

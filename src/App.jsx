@@ -16,12 +16,12 @@ function UserIcon() {
 
 function TopBar({ title }) {
   return (
-    <div className="flex justify-between items-center mb-7" id="main-header-bar">
-      <h1 style={{ fontSize: 36, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>{title}</h1>
+    <div className="flex justify-between items-center mb-3" id="main-header-bar">
+      <h1 className="text-2xl md:text-3xl font-semibold text-[#1a1a1a] m-0">{title}</h1>
       <div
         style={{
-          width: 44,
-          height: 44,
+          width: 38,
+          height: 38,
           borderRadius: "50%",
           border: `1.6px solid ${GREEN}`,
           display: "flex",
@@ -106,7 +106,7 @@ export default function App() {
       <Sidebar active={tab} setTab={setTab} onLockedClick={handleLockedClick} />
 
       {/* Main Panel Area */}
-      <div className="flex-1 p-5 md:p-10 overflow-x-hidden flex flex-col" id="main-content-panel">
+      <div className="flex-1 p-4 md:p-6 overflow-x-hidden flex flex-col" id="main-content-panel">
         
         {/* Dynamic Screen Content Wrapper with micro-transitions */}
         <div style={{ flex: 1 }} id="screen-viewport-content">

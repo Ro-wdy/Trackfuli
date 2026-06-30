@@ -3,30 +3,38 @@ import { StatCard, Pill } from "./OverviewScreen.jsx";
 import { Clock3, CalendarDays, CalendarRange, Calendar } from "lucide-react";
 
 const GREEN = "#004A4C";
-const GREY = "#EDEBEB";
+const GREY = "#F3F2EC";
 
 // Trend Icons
 function ClockIcon() {
   return (
-    <Clock3 size={22} color={GREEN} strokeWidth={1.8} id="icon-clock" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" id="icon-clock">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
   );
 }
 
 function CalDayIcon() {
   return (
-    <CalendarDays size={22} color={GREEN} strokeWidth={1.8} id="icon-cal-day" />
+    <div style={{ width: 22, height: 22 }} id="icon-cal-day" />
   );
 }
 
 function FoldIcon() {
   return (
-    <CalendarRange size={22} color={GREEN} strokeWidth={1.8} id="icon-fold" />
+    <div style={{ width: 22, height: 22 }} id="icon-fold" />
   );
 }
 
 function CalendarIcon() {
   return (
-    <Calendar size={22} color={GREEN} strokeWidth={1.8} id="icon-trends-calendar" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" id="icon-trends-calendar">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
   );
 }
 
@@ -45,21 +53,20 @@ const hourData = [
   { h: "8 AM", v: 0.42, kg: 98 }, { h: "9 AM", v: 0.56, kg: 131 }, { h: "10 AM", v: 0.68, kg: 159 }, { h: "11 AM", v: 0.76, kg: 178 },
   { h: "12 PM", v: 0.84, kg: 196 }, { h: "1 PM", v: 1, kg: 234 }, { h: "2 PM", v: 0.97, kg: 227 }, { h: "3 PM", v: 0.78, kg: 182 },
   { h: "4 PM", v: 0.62, kg: 145 }, { h: "5 PM", v: 0.5, kg: 117 }, { h: "6 PM", v: 0.38, kg: 89 }, { h: "7 PM", v: 0.2, kg: 47 },
-  { h: "8 PM", v: 0.06, kg: 14 }, { h: "9 PM", v: 0, kg: 0 }, { h: "10 PM", v: 0, kg: 0 }, { h: "11 AM2", v: 0, kg: 0 },
+  { h: "8 PM", v: 0.06, kg: 14 }, { h: "9 PM", v: 0, kg: 0 }, { h: "10 PM", v: 0, kg: 0 }, { h: "11 PM", v: 0, kg: 0 },
 ];
 
 export function HourlyBarChart() {
   const [hoveredIndex, setHoveredIndex] = useState(13);
-  const maxH = 320;
+  const maxH = 110;
 
   return (
     <div 
-      className="flex items-end justify-between gap-1 sm:gap-2.5 md:gap-3.5 w-full overflow-x-auto pb-2 mt-12"
+      className="flex items-end justify-between gap-1 sm:gap-2.5 md:gap-3.5 w-full overflow-x-auto pb-2 mt-4"
       id="hourly-bar-chart-container"
       style={{ minHeight: maxH + 40 }}
     >
       {hourData.map((d, i) => {
-        const displayLabel = d.h === "11 AM2" ? "11 PM" : d.h;
         const isHoveredOrActive = hoveredIndex === i;
 
         return (
@@ -73,14 +80,15 @@ export function HourlyBarChart() {
               <div
                 style={{
                   position: "absolute",
-                  bottom: Math.max(maxH * d.v, 6) + 12,
-                  background: "#fff",
-                  borderRadius: 9,
-                  padding: "4px 8px",
+                  bottom: Math.max(maxH * d.v, 6) + 14,
+                  background: "#FFFFFF",
+                  border: "1px solid #E2E0D8",
+                  borderRadius: 999,
+                  padding: "4px 10px",
                   fontSize: 11,
                   fontWeight: 600,
                   color: "#1a1a1a",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
                   whiteSpace: "nowrap",
                   zIndex: 10,
                 }}
@@ -94,15 +102,15 @@ export function HourlyBarChart() {
                 maxWidth: 30,
                 height: Math.max(maxH * d.v, 6),
                 background: GREEN,
-                borderRadius: 14,
+                borderRadius: 999,
                 cursor: "pointer",
                 opacity: 1,
                 transition: "transform 0.2s ease",
                 transform: isHoveredOrActive ? "scaleX(1.1)" : "none",
               }}
             />
-            <div style={{ marginTop: 10, fontSize: 11, color: "#1a1a1a", fontWeight: 500, whiteSpace: "nowrap" }}>
-              {displayLabel}
+            <div style={{ marginTop: 6, fontSize: 11, color: "#1a1a1a", fontWeight: 500, whiteSpace: "nowrap" }}>
+              {d.h}
             </div>
           </div>
         );
@@ -113,13 +121,13 @@ export function HourlyBarChart() {
 
 export function CylinderStatCard({ label, count, sub }) {
   return (
-    <div style={{ background: GREY, borderRadius: 16, padding: "18px 20px", flex: 1 }} id={`cylinder-card-${label.toLowerCase()}`}>
-      <div style={{ fontSize: 14, color: "#1a1a1a", fontWeight: 500, marginBottom: 8 }}>{label}</div>
+    <div style={{ background: GREY, borderRadius: 16, padding: "12px 16px", flex: 1 }} id={`cylinder-card-${label.toLowerCase()}`}>
+      <div style={{ fontSize: 13, color: "#6D7374", fontWeight: 500, marginBottom: 6 }}>{label}</div>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 4 }}>
-        <div style={{ fontSize: 24, fontWeight: 600, color: GREEN }}>
-          {count} <span style={{ fontSize: 14, fontWeight: 500, color: "#1a1a1a" }}>Cylinders</span>
+        <div style={{ fontSize: 20, fontWeight: 600, color: GREEN }}>
+          {count} <span style={{ fontSize: 13, fontWeight: 500, color: "#1a1a1a", marginLeft: 4 }}>Cylinders</span>
         </div>
-        <div style={{ fontSize: 14, color: "#1a1a1a", fontWeight: 500 }}>{sub}</div>
+        <div style={{ fontSize: 13.5, color: "#1a1a1a", fontWeight: 600 }}>{sub}</div>
       </div>
     </div>
   );
@@ -129,10 +137,10 @@ export default function TrendsScreen({ onLockedClick }) {
   const [activeTrend, setActiveTrend] = useState("Highest Consumptions");
 
   return (
-    <div id="trends-screen-layout" className="flex flex-col gap-6">
+    <div id="trends-screen-layout" className="flex flex-col gap-4">
       {/* Navigation Sub-options */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div style={{ display: "flex", gap: 8, background: "#f4f3ee", borderRadius: 999, padding: 4, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 8, background: "#E5E3DB", borderRadius: 999, padding: 4, flexWrap: "wrap" }}>
           {["Highest Consumptions", "Lowest Consumptions"].map((t) => {
             const isSelected = t === activeTrend;
             return (
@@ -146,7 +154,7 @@ export default function TrendsScreen({ onLockedClick }) {
                   }
                 }}
                 style={{
-                  padding: "11px 22px",
+                  padding: "8px 18px",
                   borderRadius: 999,
                   fontSize: 14,
                   fontWeight: 500,
@@ -177,26 +185,26 @@ export default function TrendsScreen({ onLockedClick }) {
       </div>
 
       {/* 24h Consumption Chart Panel */}
-      <div style={{ background: GREY, borderRadius: 20, padding: "28px 32px 20px" }} id="trends-chart-panel">
+      <div style={{ background: GREY, borderRadius: 24, padding: "18px 24px 14px" }} id="trends-chart-panel">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <div>
-            <h2 style={{ fontSize: 26, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>Consumption Within 24 Hours</h2>
-            <div style={{ marginTop: 8, fontSize: 15, color: "#1a1a1a" }}>
+            <h2 style={{ fontSize: 22, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>Consumption Within 24 Hours</h2>
+            <div style={{ marginTop: 4, fontSize: 13.5, color: "#1a1a1a" }}>
               <span style={{ fontWeight: 700, color: GREEN }}>1 PM &amp; 2PM:</span> Highest consumption times
             </div>
           </div>
           <div className="flex flex-wrap gap-2.5">
-            <Pill onClick={() => onLockedClick("Hour Filter Type")}>All Type <Chevron /></Pill>
-            <Pill onClick={() => onLockedClick("Hour Filter Location")}>All Locations <Chevron /></Pill>
-            <Pill onClick={() => onLockedClick("Hour Filter Days")}>All Days <Chevron /></Pill>
+            <Pill variant="grey" onClick={() => onLockedClick("Hour Filter Type")}>All Type <Chevron /></Pill>
+            <Pill variant="grey" onClick={() => onLockedClick("Hour Filter Location")}>All Locations <Chevron /></Pill>
+            <Pill variant="grey" onClick={() => onLockedClick("Hour Filter Days")}>All Days <Chevron /></Pill>
           </div>
         </div>
         <HourlyBarChart />
       </div>
 
       {/* Consumption By Cylinders Panel */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-4">
-        <h2 style={{ fontSize: 22, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>Consumption By Cylinders</h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-2">
+        <h2 style={{ fontSize: 18, fontWeight: 600, color: "#1a1a1a", margin: 0 }}>Consumption By Cylinders</h2>
         <div className="flex flex-wrap gap-2.5">
           <Pill onClick={() => onLockedClick("Cylinder Stats Type")}>All Type <Chevron /></Pill>
           <Pill onClick={() => onLockedClick("Cylinder Stats Location")}>All Locations <Chevron /></Pill>

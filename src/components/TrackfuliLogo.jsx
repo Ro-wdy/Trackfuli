@@ -1,5 +1,5 @@
 import React from 'react';
-import logoSvg from '../../assets/Logo.svg';
+import logoSvg from '../assets/logo.svg';
 
 export default function TrackfuliLogo() {
   return (
