@@ -5,8 +5,6 @@ Trackfuli is a responsive consumption tracking dashboard designed to visualize s
 ## Visual Design Details
 
 - **Color Scheme**: Warm sand-grey background (`#F3F2EC`) with dark forest green (`#004A4C`) as the primary tone.
-- **Thick Hand-Drawn Borders**: Pill drop-down selectors and active states use bold `1.8px solid #1a1a1a` outlines to deliver a premium vector-drawn mockup aesthetic.
-- **Laptop-Compact Scaling**: Specifically proportioned and spaced to fit completely within single-screen viewports (such as the Lenovo X390 laptop screen) without needing to scroll downwards.
 - **Responsive Layout**: Fluidly reflows cards and columns dynamically between desktop layouts and single-column stacked mobile alignments.
 
 ## Available Scripts
