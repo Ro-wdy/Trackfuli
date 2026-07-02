@@ -43,7 +43,7 @@ export default function App() {
   const [toastMessage, setToastMessage] = useState(null);
 
   const handleLockedClick = (featureName) => {
-    setToastMessage(`"${featureName}" is locked in prototype mode. Explore the fully active "Overview" or "Trends" screens.`);
+    setToastMessage(`"${featureName}" is locked ifor now. Explore the fully active "Overview" or "Trends" screens.`);
     setTimeout(() => {
       setToastMessage((curr) => curr && curr.includes(featureName) ? null : curr);
     }, 4000);
